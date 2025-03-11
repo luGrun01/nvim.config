@@ -1,8 +1,11 @@
 local lspconfig = require('lspconfig')
 
--- Default Python and pylsp installation paths (update if necessary)
-local python_executable = 'ipython' -- Use the default Python executable in your PATH
-local pylsp_command = 'pylsp' -- Use the default pylsp command in your PATH
+if vim.fn.executable('ipython') then
+  local python_executable = 'ipython'
+else
+  local python_executable = 'python'
+end
+local pylsp_command = 'pylsp'
 
 -- Custom paths for directory search
 local custom_search_paths = { '/Users/luana.grunheidt/Git/cortex/axonius-core', '/Users/luana.grunheidt/Git/cortex/adapters', '/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py', '/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py/axonius/mixins/'
@@ -33,7 +36,11 @@ lspconfig.pylsp.setup {
     pylsp = {
       plugins = {
         pyflakes = { enabled = true },
-        pylint = { enabled = true, executable = python_executable .. '/pylint' }, -- Using default Python
+        pylint = {
+          enabled = true,
+          executable = python_executable .. '/pylint',
+          args = { '--max-line-length=120' }
+        }, -- Using default Python
         yapf = { enabled = true },
         flake8 = {
           enabled = true,
@@ -41,9 +48,9 @@ lspconfig.pylsp.setup {
         },
         jedi = {
           workspace = {
-            extra_paths = { vim.fn.expand('/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py/axonius/mixins') },  -- Add project-lib to Jedi's extra paths
+            extra_paths = { vim.fn.expand('/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py/axonius/mixins') },
           },
-          extra_paths = { vim.fn.expand('/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py/axonius/mixins') },  -- Add project-lib to Jedi's extra paths
+          extra_paths = { vim.fn.expand('/Users/luana.grunheidt/Git/cortex/axonius-libs/src/libs/axonius-py/axonius/mixins') },
         }
       },
       configurationSources = {"pylint"},
@@ -61,11 +68,14 @@ lspconfig.pylsp.setup {
 
     local opts = { noremap = true, silent = true }
 
-    vim.diagnostic.enable(false)
+    vim.diagnostic.config({
+      virtual_text = false,
+    })
 
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', 'ruc', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     -- Add any additional key mappings as necessary
   end
 }
