@@ -1,9 +1,10 @@
 local lspconfig = require('lspconfig')
 
+local python_executable = ''
 if vim.fn.executable('ipython') then
-  local python_executable = 'ipython'
+  python_executable = 'ipython'
 else
-  local python_executable = 'python'
+  python_executable = 'python'
 end
 local pylsp_command = 'pylsp'
 
