@@ -38,7 +38,7 @@ Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
 " Plug 'prabirshrestha/vim-lsp'
 Plug 'neovim/nvim-lspconfig'
-Plug 'lighttiger2505/deoplete-vim-lsp'
+" Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'ervandew/supertab'
 Plug 'Shougo/context_filetype.vim' " Completion from other opened files
 Plug 'preservim/tagbar'
@@ -58,7 +58,12 @@ Plug 'tell-k/vim-autopep8'
 Plug 'mfussenegger/nvim-lint'
 Plug 'Vimjas/vim-python-pep8-indent'
 
+" Rust
+" Plug 'mrcjkb/rustaceanvim'
+"
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
+
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/luana.grunheidt/.pyenv/versions/3.10.14/bin/python'
 let g:python_host_prog = '/Users/luana.grunheidt/.pyenv/versions/3.10.14/bin/python'
@@ -125,7 +130,7 @@ set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
-colorscheme flow
+colorscheme catppuccin
 
 " =========== generic remaps
 " Leader key is <space>
